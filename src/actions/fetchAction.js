@@ -25,23 +25,20 @@ export const fetchPins = (search) => (dispatch) => {
       '/api/pins'
     )
     .then((response) => {
-      console.log(response)
-      setTimeout(() => {
-      // initialize array for pins
+    if (response.data) { 
       response.data.forEach(image => {
-        // checks if search results contain title OR username
-        if ((image.title).toLowerCase().includes(search.toLowerCase()) || (image.author).toLowerCase().includes(search.toLowerCase())
-           ) {
-             gallery.push(image)
-            //  gallery.push(image)
-          }
-        })
-        dispatch({
-          type: FETCH_PINS,
-          // EVERYTHING IS IMMUTABLE
-          payload: gallery,
-        });
-      }, 1500)
+      // checks if search results contain title OR username
+      if ((image.title).toLowerCase().includes(search.toLowerCase()) || (image.author).toLowerCase().includes(search.toLowerCase())
+         ) {
+           gallery.push(image)
+          //  gallery.push(image)
+        }
+      })
+      dispatch({
+        type: FETCH_PINS,
+        payload: gallery,
+      });
+    }
     })
     .catch((err) => console.log(err));
 };
